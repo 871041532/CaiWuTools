@@ -1,5 +1,4 @@
 import getpass
-import openpyxl
 
 class Globals_Class(object):
 	def __init__(self):
@@ -183,6 +182,7 @@ class Globals_Class(object):
 
 	# 处理一下日期格式
 	def eval_date_format(self, file_path, col_names):
+		import openpyxl
 		excel = openpyxl.load_workbook(file_path)
 		sheet = excel["凭证"]
 		for col_name in col_names:
