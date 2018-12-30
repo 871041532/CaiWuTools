@@ -67,6 +67,6 @@ def run():
             print("  安装 " + module_name + " 完毕")
     print("模块检测完毕")
 
-    print("更新完毕, 按任意键结束。")
+    print("\n更新完毕, 按任意键结束。")
     a = input()
 run()
