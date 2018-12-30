@@ -3,6 +3,14 @@ import openpyxl
 
 class Globals_Class(object):
 	def __init__(self):
+		# 依赖模块
+		self.module_names = [
+			"getpass",
+			"openpyxl",
+			"PyQt5",
+			"pyexcel_xlsx",
+			"pyexcel_xls",
+		]
 		# 用户名
 		self.user = getpass.getuser()
 		# 窗口名
