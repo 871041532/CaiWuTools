@@ -55,7 +55,7 @@ def run():
     print("多余文件删除完毕")
 
     # 安装缺失包
-    print("5.安装缺失包...")
+    print("5.检查需要的模块...")
     from Globals import Globals
     module_names = Globals.module_names
     for module_name in module_names:
@@ -65,7 +65,7 @@ def run():
             print("  缺少module:" + module_name + ", 开始安装...")
             os.system("pip install " + module_name)
             print("  安装 " + module_name + " 完毕")
-    print("缺失包安装完毕")
+    print("模块检测完毕")
 
     print("更新完毕, 按任意键结束。")
     a = input()
