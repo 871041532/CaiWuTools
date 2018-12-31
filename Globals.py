@@ -191,6 +191,8 @@ class Globals_Class(object):
 			for cell in col:
 				if idx > 0:
 					cell.number_format = "mm-dd-yy"
+				else:
+					cell.number_format = "General"
 				idx = idx + 1
 		excel.save(file_path)
 
