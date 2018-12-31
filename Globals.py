@@ -192,9 +192,9 @@ class Globals_Class(object):
 			for idx in range(len(col)):
 				cell = col[idx]
 				if idx > 0:
-					#col[idx] = deepcopy(demo_cell)
-					#col[idx].value = cell.value
-					cell.number_format = "mm-dd-yy"
+					col[idx] = deepcopy(demo_cell)
+					col[idx].value = cell.value
+					# cell.number_format = "mm-dd-yy"
 				else:
 					cell.number_format = "General"
 
