@@ -183,21 +183,17 @@ class Globals_Class(object):
 	# 处理一下日期格式
 	def eval_date_format(self, file_path, col_names):
 		import openpyxl
-		from copy import deepcopy
-		demo_cell = openpyxl.load_workbook("target_demo.xlsx")["凭证"]["C"][2]
 		excel = openpyxl.load_workbook(file_path)
 		sheet = excel["凭证"]
 		for col_name in col_names:
+			idx = 0
 			col = sheet[col_name]
-			for idx in range(len(col)):
-				cell = col[idx]
+			for cell in col:
 				if idx > 0:
-					col[idx] = deepcopy(demo_cell)
-					col[idx].value = cell.value
-					# cell.number_format = "mm-dd-yy"
+					cell.number_format = "mm-dd-yy"
 				else:
 					cell.number_format = "General"
-
+				idx = idx + 1
 		excel.save(file_path)
 
 	# 根据时间text获取本月

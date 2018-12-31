@@ -2,7 +2,6 @@
 file_path = "C:\\Users\\Administrator\\Desktop\\印力引入模板.xlsx"
 
 import openpyxl
-from copy import deepcopy
 excel = openpyxl.load_workbook(file_path)
 sheet = excel["凭证"]
 col = sheet["C"]
@@ -11,8 +10,6 @@ print(len(col))
 print(col[0].value)
 print(col[0].number_format)
 print(col[1].number_format)
-col2 = deepcopy(col[1])
-
 # for col_name in col_names:
 #     idx = 0
 #     col = sheet[col_name]
