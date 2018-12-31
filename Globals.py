@@ -183,14 +183,20 @@ class Globals_Class(object):
 	# 处理一下日期格式
 	def eval_date_format(self, file_path, col_names):
 		import openpyxl
+		import datetime
 		excel = openpyxl.load_workbook(file_path)
 		sheet = excel["凭证"]
+		cur_date = None
 		for col_name in col_names:
 			idx = 0
 			col = sheet[col_name]
 			for cell in col:
 				if idx > 0:
 					cell.number_format = "mm-dd-yy"
+					if not cur_date:
+						year, month, day = [int(x) for x in cell.value.split('/')]
+						cur_date = datetime.datetime(year, month, day)
+					cell.value = cur_date
 				else:
 					cell.number_format = "General"
 				idx = idx + 1

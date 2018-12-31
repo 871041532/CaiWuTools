@@ -1,15 +1,10 @@
-
-file_path = "C:\\Users\\Administrator\\Desktop\\印力引入模板.xlsx"
-
-import openpyxl
-excel = openpyxl.load_workbook(file_path)
-sheet = excel["凭证"]
-col = sheet["C"]
-cell = col[3]
-print(len(col))
-print(col[0].value)
-print(col[0].number_format)
-print(col[1].number_format)
+import datetime
+print (datetime.datetime)
+value = "2018/11/06"
+year, month, day = [int(x) for x in value.split('/')]
+print(year)
+print(month)
+print(day)
 # for col_name in col_names:
 #     idx = 0
 #     col = sheet[col_name]
