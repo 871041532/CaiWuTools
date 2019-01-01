@@ -122,7 +122,8 @@ class ShowWindow(QWidget):
         for i in range(len(data) - 1):
             idx = i + 1
             row = data[idx]
-            if row[duifanganwei_idx] == "1001278619005510123	":
+            value = str(row[duifanganwei_idx]).replace(" ","")
+            if value == "1001278619005510123" or value == "0000300000000212" or value == "215500690":
                 target_data.append(row)
         self.my_data = target_data
 
