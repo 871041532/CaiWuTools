@@ -28,7 +28,7 @@ class ShowWindow(QWidget):
 	def initUI(self):
 		mainLayout = QVBoxLayout()
 
-		self.button1 = QPushButton("选择地产导出表")
+		self.button1 = QPushButton("选择地产表：标准凭证引出-GX凭证类型")
 		self.button1.clicked.connect(self.click_select_my)
 		self.button1.setMinimumHeight(70)
 
@@ -74,10 +74,10 @@ class ShowWindow(QWidget):
 			self.close()
 
 	def click_select_my(self):
-		info = QFileDialog.getOpenFileName(self, '选择地产导出表')
+		info = QFileDialog.getOpenFileName(self, '选择地产表：标准凭证引出-GX凭证类型')
 		if info and info[0]:
 			self.my_filename = info[0]
-			self.log("选择了地产导出表：" + self.my_filename)
+			self.log("选择了地产表：" + self.my_filename)
 
 	def click_select_bank(self):
 		info = QFileDialog.getOpenFileName(self, '选择基础信息表')
