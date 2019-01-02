@@ -39,11 +39,7 @@ class ShowWindow(QWidget):
         self.button2.clicked.connect(self.click_select_refer)
         self.button2.setMinimumHeight(70)
 
-        cur = datetime.datetime.now()
-        month = cur.month - 1
-        if month == 0:
-            month = 12
-        time_str = str(cur.year) + "/" + str(month) + "/28"
+        time_str = Globals.get_time_text_str()
         self.label = QLineEdit(time_str)
         self.label.setPlaceholderText("输入凭证日期 如2018/11/6...")
         self.label.setMinimumHeight(50)

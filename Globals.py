@@ -202,6 +202,24 @@ class Globals_Class(object):
 				idx = idx + 1
 		excel.save(file_path)
 
+	# 获取上个月28号
+	def get_year_month_day(self):
+		import datetime
+		cur = datetime.datetime.now()
+		year = cur.year
+		month = cur.month
+		day = 28
+		month = month - 1
+		if month == 0:
+			month = 12
+			year = year - 1
+		return year, month, day
+
+	# 获取上月28号时间str
+	def get_time_text_str(self):
+		year, month, day = self.get_year_month_day()
+		return str(year) + "/" + str(month) + "/" + str(day)
+
 	# 根据时间text获取本月
 	def get_year_month_day_lastmonth(self, date_str):
 		month = date_str.split('/')[1]
