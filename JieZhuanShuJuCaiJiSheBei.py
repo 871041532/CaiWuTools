@@ -264,7 +264,7 @@ class ShowWindow(QWidget):
             row.append(idx * 2 - 1)
             row2.append(idx * 2)
             # 摘要
-            replace_zhaiyao_str = "结转" + year + last_month
+            replace_zhaiyao_str = "结转" + year + month
             zhaiyao_value = replace_zhaiyao_str + bank_data[idx][zhaiyao_bank_idx][2:]
             row.append(zhaiyao_value)
             row2.append(zhaiyao_value)
