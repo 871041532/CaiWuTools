@@ -30,7 +30,7 @@ class ShowWindow(QWidget):
     def initUI(self):
         mainLayout = QVBoxLayout()
 
-        self.button1 = QPushButton("选择【凭证查询-收款-高级】导出表")
+        self.button1 = QPushButton("选择【凭证查询-高级】导出表")
         self.button1.clicked.connect(self.click_select_my)
         self.button1.setMinimumHeight(70)
 
@@ -83,7 +83,7 @@ class ShowWindow(QWidget):
             self.log("选择了" + self.refer_filename)
 
     def click_select_my(self):
-        info = QFileDialog.getOpenFileName(self, '选择【凭证查询-收字-高级】导出表')
+        info = QFileDialog.getOpenFileName(self, '选择【凭证查询-高级】导出表')
         if info and info[0]:
             self.my_filename = info[0]
             self.log("选择了【凭证查询-收字-高级】导出表：" + self.my_filename)
