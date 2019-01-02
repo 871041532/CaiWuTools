@@ -8,17 +8,17 @@ def run():
     # 基础模块
     print("检测基础模块...")
     module_names = [
-        "requests",
-        "zipfile",
-        "shutil"
+        ("requests", "requests"),
+        ("zipfile", "zipfile"),
+        ("shutil", "shutil"),
     ]
     for module_name in module_names:
         try:
-            __import__(module_name)
+            __import__(module_name[0])
         except:
-            print("  缺少module:" + module_name + ", 开始安装...")
-            os.system("pip install " + module_name)
-            print("  安装 " + module_name + " 完毕")
+            print("  缺少module:" + module_name[0] + ", 开始安装...")
+            os.system("pip install " + module_name[1])
+            print("  安装 " + module_name[0] + " 完毕")
     import requests
     import zipfile
     import shutil
