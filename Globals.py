@@ -4,11 +4,11 @@ class Globals_Class(object):
 	def __init__(self):
 		# 依赖模块
 		self.module_names = [
-			"getpass",
-			"openpyxl",
-			"PyQt5",
-			"pyexcel_xlsx",
-			"pyexcel_xls",
+			("getpass", "getpass"),
+			("openpyxl", "openpyxl"),
+			("PyQt5", "PyQt5"),
+			("pyexcel_xlsx", "pyexcel_xlsx"),
+			("pyexcel_xls", "pyexcel_xls"),
 		]
 		# 用户名
 		self.user = getpass.getuser()

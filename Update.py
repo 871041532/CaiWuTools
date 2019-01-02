@@ -60,11 +60,11 @@ def run():
     module_names = Globals.module_names
     for module_name in module_names:
         try:
-            __import__(module_name)
+            __import__(module_name[0])
         except:
-            print("  缺少module:" + module_name + ", 开始安装...")
-            os.system("pip install " + module_name)
-            print("  安装 " + module_name + " 完毕")
+            print("  缺少module:" + module_name[0] + ", 开始安装...")
+            os.system("pip install " + module_name[1])
+            print("  安装 " + module_name[0] + " 完毕")
     print("模块检测完毕")
 
     print("\n更新完毕, 按回车结束。")
