@@ -35,7 +35,7 @@ class ShowWindow(QWidget):
 		jiezhuan_layout.addWidget(self.button4)
 
 		yuezhong_jiezhuan_layout = QHBoxLayout()
-		self.button7 = QPushButton("月中结转主合同")
+		self.button7 = QPushButton("月末结转主合同")
 		self.button7.clicked.connect(self.YueZhongJieZhuanMain)
 		yuezhong_jiezhuan_layout.addWidget(self.button7)
 
@@ -94,7 +94,7 @@ class ShowWindow(QWidget):
 	def WeiXinPark(self):
 		Globals.current_win = WeiXinPark.into()
 
-	# 月中结转主合同
+	# 月末结转主合同
 	def YueZhongJieZhuanMain(self):
 		Globals.current_win = YueZhongJieZhuanMain.into()
 

@@ -78,7 +78,7 @@ class ShowWindow(QWidget):
         self.out_put_datas = None
 
         self.setLayout(mainLayout)
-        self.setWindowTitle("月中结转主合同")
+        self.setWindowTitle("月末结转主合同")
         self.setGeometry(550, 150, 900, 800)
         self.show()
 
