@@ -188,17 +188,19 @@ class ShowWindow(QWidget):
         kemu_date_str_last_month = Globals.get_time_text_year_lastmonth()
         output_filenames = (
             # key，税率，非主力店科目，主力店科目
-            ("仓库租赁费", 1.1, "6001.05", "6001.05", "结转" + kemu_date_str + "仓库租赁费收入 %s-%s-%s"),
-            ("浮动提成租金", 1.1, "6001.02.02", "6001.02.01", "结转" + kemu_date_str_last_month + "浮动提成租金 %s-%s-%s"),
-            ("固定租金", 1.1, "6001.01.02", "6001.01.01", "结转" + kemu_date_str + "固定租金 %s-%s-%s"),
-            ("广告位租赁费", 1.1, "6001.08", "6001.08", "结转" + kemu_date_str + "广告位租赁费收入 %s-%s-%s"),
-            ("推广费(销售提成）", 1.06, "6001.12", "6001.12", "结转" + kemu_date_str_last_month + "推广费(销售提成） %s-%s-%s"),
-            ("推广费（固定）", 1.06, "6001.12", "6001.12", "结转" + kemu_date_str + "推广费（固定） %s-%s-%s"),
-            ("物业管理费", 1.06, "6001.04.02", "6001.04.01", "结转" + kemu_date_str + "物业管理费收入 %s-%s-%s"),
+            ("仓库租赁费", 1.1, "6001.05", "6001.05", "结转" + kemu_date_str + "仓库租赁费收入 %s-%s-%s", "结转主合同仓库租赁费.xlsx", "2203.01.01", 0),
+            ("浮动提成租金", 1.1, "6001.02.02", "6001.02.01", "结转" + kemu_date_str_last_month + "浮动提成租金 %s-%s-%s", "结转主合同浮动提成租金.xlsx", "2203.01.01", 0),
+            ("浮动提成租金", 1.1, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "浮动提成租金 %s-%s-%s", "确认主合同浮动提成租金.xlsx", "1122.01.01", 1),
+            ("固定租金", 1.1, "6001.01.02", "6001.01.01", "结转" + kemu_date_str + "固定租金 %s-%s-%s", "结转主合同固定租金.xlsx", "2203.01.01", 0),
+            ("广告位租赁费", 1.1, "6001.08", "6001.08", "结转" + kemu_date_str + "广告位租赁费收入 %s-%s-%s", "结转主合同广告位租赁费.xlsx", "2203.01.01", 0),
+            ("推广费(销售提成）", 1.06, "6001.12", "6001.12", "结转" + kemu_date_str_last_month + "推广费(销售提成） %s-%s-%s", "结转主合同推广费(销售提成）.xlsx", "2203.01.01", 0),
+            ("推广费(销售提成）", 1.06, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "推广费(销售提成） %s-%s-%s", "确认主合同推广费(销售提成）.xlsx", "1122.01.01", 1),
+            ("推广费（固定）", 1.06, "6001.12", "6001.12", "结转" + kemu_date_str + "推广费（固定） %s-%s-%s", "结转主合同推广费（固定）.xlsx", "2203.01.01", 0),
+            ("物业管理费", 1.06, "6001.04.02", "6001.04.01", "结转" + kemu_date_str + "物业管理费收入 %s-%s-%s", "结转主合同物业管理费.xlsx", "2203.01.01", 0),
         )
         for file_info in output_filenames:
             # 主key
-            file_name = file_info[0]
+            title_key = file_info[0]
             # 税率
             shuilv = file_info[1]
             # 非主力科目
@@ -207,10 +209,15 @@ class ShowWindow(QWidget):
             zhuli_kemu = file_info[3]
             # 摘要str
             zhaiyao_str = file_info[4]
+            # 文件名
+            file_name = file_info[5]
+            # row1科目
+            kemu_name1 = file_info[6]
+            # 核算项目都有
+            is_hesuanxiangmu_all = file_info[7]
             # 获取demo
             excel_data = deepcopy(Globals.get_origin_excel_data())
-            target_file_name = out_put_file_dir + "结转主合同" + file_name + ".xlsx"
-            title_key = file_name
+            target_file_name = out_put_file_dir + file_name
             title_idx = self.my_data[0].index(title_key)
             origin_data = []
             for i in range(1, len(self.my_data)):
@@ -251,7 +258,7 @@ class ShowWindow(QWidget):
                 zhaiyao = zhaiyao_str%(shop_name, zhiapai_name, puweihao_name)
                 row[Globals.get_pingzheng_idx("摘要")] = zhaiyao
                 row2[Globals.get_pingzheng_idx("摘要")] = zhaiyao
-                row[Globals.get_pingzheng_idx("科目")] = "2203.01.01"
+                row[Globals.get_pingzheng_idx("科目")] = kemu_name1
                 if self.is_zhuli(shop_name):
                     row2[Globals.get_pingzheng_idx("科目")] = zhuli_kemu
                 else:
@@ -266,9 +273,15 @@ class ShowWindow(QWidget):
                 row[Globals.get_pingzheng_idx("现金流量标记")] = 2
                 row2[Globals.get_pingzheng_idx("现金流量标记")] = 2
                 row[Globals.get_pingzheng_idx("辅助账摘要")] = zhaiyao_str
+                row2[Globals.get_pingzheng_idx("辅助账摘要")] = zhaiyao_str
                 row[Globals.get_pingzheng_idx("核算项目1")] = "长益租户"
                 row[Globals.get_pingzheng_idx("名称1")] = shop_name
                 row[Globals.get_pingzheng_idx("编码1")] = self.get_bianma(shop_name)
+                if is_hesuanxiangmu_all:
+                    row2[Globals.get_pingzheng_idx("核算项目1")] = "长益租户"
+                    row2[Globals.get_pingzheng_idx("名称1")] = shop_name
+                    row2[Globals.get_pingzheng_idx("编码1")] = self.get_bianma(shop_name)
+
 
 
 
