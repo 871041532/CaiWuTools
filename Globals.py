@@ -34,7 +34,7 @@ class Globals_Class(object):
 			self.user = None
 		else:
 			self.user_title = title_dict[self.user]
-			self.desktop_path = "C:\\Users\\"+ self.user +"\\Desktop\\"
+			self.desktop_path = "C:/Users/"+ self.user +"/Desktop/"
 			self.eas_name = eas_name_dict[self.user]
 
 		# 凭证表头
@@ -219,6 +219,11 @@ class Globals_Class(object):
 	def get_time_text_str(self):
 		year, month, day = self.get_year_month_day()
 		return str(year) + "/" + str(month) + "/" + str(day)
+
+	# 获取上月的年xx月
+	def get_time_text_year_lastmonth(self):
+		year, month, day = self.get_year_month_day()
+		return str(year) + "%02d"%int(month)
 
 	# 根据时间text获取本月
 	def get_year_month_day_lastmonth(self, date_str):
