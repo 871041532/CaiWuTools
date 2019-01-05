@@ -35,11 +35,11 @@ class ShowWindow(QWidget):
     def initUI(self):
         mainLayout = QVBoxLayout()
 
-        self.button1 = QPushButton("选择海鼎导出结转表")
+        self.button1 = QPushButton("选择海鼎导出月初确认表")
         self.button1.clicked.connect(self.click_select_my)
         self.button1.setMinimumHeight(70)
 
-        self.button2 = QPushButton("选择需要填充的7个结转模板")
+        self.button2 = QPushButton("选择需要填充的水电费结转模板")
         self.button2.clicked.connect(self.click_select_output)
         self.button2.setMinimumHeight(70)
 
@@ -48,11 +48,11 @@ class ShowWindow(QWidget):
         self.label.setPlaceholderText("输入结转模板sheet名字 如: 1月")
         self.label.setMinimumHeight(50)
 
-        self.button3 = QPushButton("开始填充结转模板")
+        self.button3 = QPushButton("开始填充水电费结转模板")
         self.button3.clicked.connect(self.click_judge_btn)
         self.button3.setMinimumHeight(70)
 
-        self.button4 = QPushButton("生成主合同结转凭证")
+        self.button4 = QPushButton("生成主合同水电结转与确认凭证")
         self.button4.clicked.connect(self.click_deal_pingzheng)
         self.button4.setMinimumHeight(70)
 
@@ -78,7 +78,7 @@ class ShowWindow(QWidget):
         self.out_put_datas = None
 
         self.setLayout(mainLayout)
-        self.setWindowTitle("月末结转主合同")
+        self.setWindowTitle("月初确认主合同")
         self.setGeometry(550, 150, 900, 800)
         self.show()
 
@@ -87,10 +87,10 @@ class ShowWindow(QWidget):
 
     # 选择目标表
     def click_select_output(self):
-        info = QFileDialog.getOpenFileNames(self, '选择需要填充的7个结转模板')
+        info = QFileDialog.getOpenFileNames(self, '选择需要填充的水电费结转模板')
         if info and info[0]:
             self.out_put_filenames = info[0]
-            self.log("选择了结转模板：" + str(self.out_put_filenames))
+            self.log("选择了水电费结转模板：" + str(self.out_put_filenames))
 
     # 选择基础信息表
     def click_select_refer(self):
@@ -101,10 +101,10 @@ class ShowWindow(QWidget):
 
     # 选择源
     def click_select_my(self):
-        info = QFileDialog.getOpenFileName(self, '选择海鼎导出结转表')
+        info = QFileDialog.getOpenFileName(self, '选择海鼎导出月初确认表')
         if info and info[0]:
             self.my_filename = info[0]
-            self.log("选择海鼎导出结转表：" + self.my_filename)
+            self.log("选择海鼎导出月初确认表：" + self.my_filename)
 
     def clear_log(self):
         self.text_browser.clear()
@@ -188,15 +188,10 @@ class ShowWindow(QWidget):
         kemu_date_str_last_month = Globals.get_time_text_year_lastmonth()
         output_filenames = (
             # key，税率，非主力店科目，主力店科目
-            ("仓库租赁费", 1.1, "6001.05", "6001.05", "结转" + kemu_date_str + "仓库租赁费收入 %s-%s-%s", "结转主合同仓库租赁费.xlsx", "2203.01.01", 0),
-            ("浮动提成租金", 1.1, "6001.02.02", "6001.02.01", "结转" + kemu_date_str_last_month + "浮动提成租金 %s-%s-%s", "结转主合同浮动提成租金.xlsx", "2203.01.01", 0),
-            ("浮动提成租金", 1.1, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "浮动提成租金 %s-%s-%s", "确认主合同浮动提成租金.xlsx", "1122.01.01", 1),
-            ("固定租金", 1.1, "6001.01.02", "6001.01.01", "结转" + kemu_date_str + "固定租金 %s-%s-%s", "结转主合同固定租金.xlsx", "2203.01.01", 0),
-            ("广告位租赁费", 1.1, "6001.08", "6001.08", "结转" + kemu_date_str + "广告位租赁费收入 %s-%s-%s", "结转主合同广告位租赁费.xlsx", "2203.01.01", 0),
-            ("推广费(销售提成）", 1.06, "6001.12", "6001.12", "结转" + kemu_date_str_last_month + "推广费(销售提成） %s-%s-%s", "结转主合同推广费(销售提成）.xlsx", "2203.01.01", 0),
-            ("推广费(销售提成）", 1.06, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "推广费(销售提成） %s-%s-%s", "确认主合同推广费(销售提成）.xlsx", "1122.01.01", 1),
-            ("推广费（固定）", 1.06, "6001.12", "6001.12", "结转" + kemu_date_str + "推广费（固定） %s-%s-%s", "结转主合同推广费（固定）.xlsx", "2203.01.01", 0),
-            ("物业管理费", 1.06, "6001.04.02", "6001.04.01", "结转" + kemu_date_str + "物业管理费收入 %s-%s-%s", "结转主合同物业管理费.xlsx", "2203.01.01", 0),
+            ("电费", 1.16, "6401.24.01.02", "6401.24.01.02", "结转" + kemu_date_str_last_month + "电费 %s-%s-%s", "结转主合同电费.xlsx", "2203.01.01", 0),
+            ("电费", 1.16, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "电费 %s-%s-%s", "确认主合同电费.xlsx", "1122.01.01", 1),
+            ("水费", 1.03, "6401.24.02.02", "6401.24.02.02", "结转" + kemu_date_str_last_month + "水费 %s-%s-%s", "结转主合同水费.xlsx", "2203.01.01", 0),
+            ("水费", 1.03, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "水费 %s-%s-%s", "确认主合同水费.xlsx", "1122.01.01", 1),
         )
         for file_info in output_filenames:
             # 主key
@@ -214,7 +209,7 @@ class ShowWindow(QWidget):
             # row1科目
             kemu_name1 = file_info[6]
             # 核算项目都有
-            is_hesuanxiangmu_all = file_info[7]
+            is_queren = file_info[7]
             # 获取demo
             excel_data = deepcopy(Globals.get_origin_excel_data())
             target_file_name = out_put_file_dir + file_name
@@ -264,23 +259,40 @@ class ShowWindow(QWidget):
                 else:
                     row2[Globals.get_pingzheng_idx("科目")] = not_zhuli_kemu
                 row[Globals.get_pingzheng_idx("方向")] = 1
-                row2[Globals.get_pingzheng_idx("方向")] = 0
+                if is_queren:
+                    row2[Globals.get_pingzheng_idx("方向")] = 0
+                else:
+                    row2[Globals.get_pingzheng_idx("方向")] = 1
                 jine_num = float("%.2f" % (one_data[title_idx] / shuilv))
                 row[Globals.get_pingzheng_idx("原币金额")] = jine_num
-                row2[Globals.get_pingzheng_idx("原币金额")] = jine_num
+                if is_queren:
+                    row2[Globals.get_pingzheng_idx("原币金额")] = jine_num
+                else:
+                    row2[Globals.get_pingzheng_idx("原币金额")] = -jine_num
                 row[Globals.get_pingzheng_idx("借方金额")] = jine_num
-                row2[Globals.get_pingzheng_idx("贷方金额")] = jine_num
+                if is_queren:
+                    pass
+                else:
+                    row2[Globals.get_pingzheng_idx("借方金额")] = -jine_num
+                if is_queren:
+                    row2[Globals.get_pingzheng_idx("贷方金额")] = jine_num
+                else:
+                    pass
                 row[Globals.get_pingzheng_idx("现金流量标记")] = 2
                 row2[Globals.get_pingzheng_idx("现金流量标记")] = 2
-                row[Globals.get_pingzheng_idx("辅助账摘要")] = zhaiyao_str
-                row2[Globals.get_pingzheng_idx("辅助账摘要")] = zhaiyao_str
+                row[Globals.get_pingzheng_idx("辅助账摘要")] = zhaiyao
+                row2[Globals.get_pingzheng_idx("辅助账摘要")] = zhaiyao
                 row[Globals.get_pingzheng_idx("核算项目1")] = "长益租户"
                 row[Globals.get_pingzheng_idx("名称1")] = shop_name
                 row[Globals.get_pingzheng_idx("编码1")] = self.get_bianma(shop_name)
-                if is_hesuanxiangmu_all:
+                if is_queren:
                     row2[Globals.get_pingzheng_idx("核算项目1")] = "长益租户"
                     row2[Globals.get_pingzheng_idx("名称1")] = shop_name
                     row2[Globals.get_pingzheng_idx("编码1")] = self.get_bianma(shop_name)
+                else:
+                    row2[Globals.get_pingzheng_idx("核算项目1")] = "部门"
+                    row2[Globals.get_pingzheng_idx("编码1")] = "102.E018"
+                    row2[Globals.get_pingzheng_idx("名称1")] = "七宝物业部"
 
 
 
@@ -303,21 +315,10 @@ class ShowWindow(QWidget):
         # 处理 1.1
         for k, v in self.out_put_datas.items():
             title_key = ""
-            if "1.1" == k[0:3]:
-                # 获取原始数据
-                title_key = "仓库租赁费"
-            elif "1.2" == k[0:3]:
-                title_key = "浮动提成租金"
-            elif "1.3" == k[0:3]:
-                title_key = "固定租金"
-            elif "1.4" == k[0:3]:
-                title_key = "广告位租赁费"
-            elif "1.5" == k[0:3]:
-                title_key = "推广费(销售提成）"
-            elif "1.6" == k[0:3]:
-                title_key = "推广费（固定）"
-            elif "1.7" == k[0:3]:
-                title_key = "物业管理费"
+            if "1.8" == k[0:3]:
+                title_key = "电费"
+            elif "1.9" == k[0:3]:
+                title_key = "水费"
             if title_key:
                 title_idx = self.my_data[0].index(title_key)
                 origin_data = []
