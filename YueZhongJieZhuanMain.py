@@ -181,9 +181,8 @@ class ShowWindow(QWidget):
 
         # 基础信息
         out_put_file_dir = Globals.desktop_path + "主合同结转引入凭证/"
-        if os.path.exists(out_put_file_dir):
-            shutil.rmtree(out_put_file_dir)
-        os.mkdir(out_put_file_dir)
+        if not os.path.exists(out_put_file_dir):
+            os.mkdir(out_put_file_dir)
         cur = datetime.datetime.now()
         kemu_date_str = str(cur.year) + "%02d"%cur.month
         kemu_date_str_last_month = Globals.get_time_text_year_lastmonth()
