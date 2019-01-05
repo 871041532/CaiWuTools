@@ -9,6 +9,7 @@ import JieZhuanYunPos
 import JieZhuanShuJuCaiJiSheBei
 import ZhiFuBaoPark
 import WeiXinPark
+import YueZhongJieZhuanMain
 from Globals import Globals
 
 
@@ -33,6 +34,11 @@ class ShowWindow(QWidget):
 		jiezhuan_layout.addWidget(self.button3)
 		jiezhuan_layout.addWidget(self.button4)
 
+		yuezhong_jiezhuan_layout = QHBoxLayout()
+		self.button7 = QPushButton("月中结转主合同")
+		self.button7.clicked.connect(self.YueZhongJieZhuanMain)
+		yuezhong_jiezhuan_layout.addWidget(self.button7)
+
 		zhifubao_layout = QHBoxLayout()
 		self.button5 = QPushButton("停车场支付宝返款")
 		self.button5.clicked.connect(self.ZhiFuBaoPark)
@@ -42,20 +48,22 @@ class ShowWindow(QWidget):
 		zhifubao_layout.addWidget(self.button6)
 
 
-		self.button1.setMinimumHeight(100)
-		self.button2.setMinimumHeight(100)
-		self.button3.setMinimumHeight(100)
-		self.button4.setMinimumHeight(100)
-		self.button5.setMinimumHeight(100)
-		self.button6.setMinimumHeight(100)
+		self.button1.setMinimumHeight(90)
+		self.button2.setMinimumHeight(90)
+		self.button3.setMinimumHeight(90)
+		self.button4.setMinimumHeight(90)
+		self.button5.setMinimumHeight(90)
+		self.button6.setMinimumHeight(90)
+		self.button7.setMinimumHeight(90)
 
+		mainLayout.addLayout(yuezhong_jiezhuan_layout)
 		mainLayout.addLayout(jiezhuan_layout)
 		mainLayout.addLayout(zhifubao_layout)
 		mainLayout.addWidget(self.button2)
 		mainLayout.addWidget(self.button1)
 
 		self.setLayout(mainLayout)
-		self.setGeometry(700, 300, 400, 250)
+		self.setGeometry(700, 200, 400, 250)
 		self.show()
 
 		if not Globals.user:
@@ -85,6 +93,10 @@ class ShowWindow(QWidget):
 	# 微信停车场
 	def WeiXinPark(self):
 		Globals.current_win = WeiXinPark.into()
+
+	# 月中结转主合同
+	def YueZhongJieZhuanMain(self):
+		Globals.current_win = YueZhongJieZhuanMain.into()
 
 
 if __name__ == '__main__':
