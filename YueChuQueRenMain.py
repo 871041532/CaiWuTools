@@ -337,12 +337,12 @@ class ShowWindow(QWidget):
                 # 写入
                 for i in range(len(origin_data)):
                     save_row_idx = i + 3
-                    # 租户名称
-                    sheet.cell(row = save_row_idx, column = 1).value = origin_data[i][gongsimingcheng_idx]
-                    # 店铺招牌
-                    sheet.cell(row = save_row_idx, column = 2).value = origin_data[i][dianpuzhaopai_idx]
                     # 铺位号
-                    sheet.cell(row = save_row_idx, column = 3).value = origin_data[i][puweihao_idx]
+                    sheet.cell(row = save_row_idx, column = 1).value = origin_data[i][puweihao_idx]
+                    # 租户名称
+                    sheet.cell(row = save_row_idx, column = 2).value = origin_data[i][gongsimingcheng_idx]
+                    # 店铺招牌
+                    sheet.cell(row = save_row_idx, column = 3).value = origin_data[i][dianpuzhaopai_idx]
                     # 金额
                     sheet.cell(row=save_row_idx, column = 4).value = origin_data[i][title_idx]
                 v[1].save(v[0])
