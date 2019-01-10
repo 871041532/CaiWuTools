@@ -39,7 +39,7 @@ class ShowWindow(QWidget):
         self.button1.clicked.connect(self.click_select_my)
         self.button1.setMinimumHeight(70)
 
-        self.button2 = QPushButton("选择需要填充的水电费结转模板")
+        self.button2 = QPushButton("选择需要填充的2.开头的模板")
         self.button2.clicked.connect(self.click_select_output)
         self.button2.setMinimumHeight(70)
 
@@ -48,7 +48,7 @@ class ShowWindow(QWidget):
         self.label.setPlaceholderText("输入结转模板sheet名字 如: 1月")
         self.label.setMinimumHeight(50)
 
-        self.button3 = QPushButton("开始填充水电费结转模板")
+        self.button3 = QPushButton("开始填充2.开头的模板")
         self.button3.clicked.connect(self.click_judge_btn)
         self.button3.setMinimumHeight(70)
 
@@ -87,10 +87,10 @@ class ShowWindow(QWidget):
 
     # 选择目标表
     def click_select_output(self):
-        info = QFileDialog.getOpenFileNames(self, '选择需要填充的水电费结转模板')
+        info = QFileDialog.getOpenFileNames(self, '选择需要填充的2.开头模板')
         if info and info[0]:
             self.out_put_filenames = info[0]
-            self.log("选择了水电费结转模板：" + str(self.out_put_filenames))
+            self.log("选择了2.开头模板： " + str([x.split("/")[-1] for x in self.out_put_filenames]))
 
     # 选择基础信息表
     def click_select_refer(self):
@@ -310,15 +310,25 @@ class ShowWindow(QWidget):
     def get_bianma(self, shop_name):
         return self.refer_data[shop_name][2]
 
+    deal_dict = {
+        "2.1": {"title_key": "仓库租赁费"},
+        "2.2": {"title_key": "电费"},
+        "2.3": {"title_key": "电费"},
+        "2.4": {"title_key": "固定租金"},
+        "2.5": {"title_key": "广告位租赁费"},
+        "2.6": {"title_key": "水费"},
+        "2.7": {"title_key": "水费"},
+        "2.8": {"title_key": "推广费（固定）"},
+        "2.9": {"title_key": "物业管理费"},
+    }
     # 处理模板数据
     def deal_muban_data(self):
         # 处理 1.1
         for k, v in self.out_put_datas.items():
             title_key = ""
-            if "1.8" == k[0:3]:
-                title_key = "电费"
-            elif "1.9" == k[0:3]:
-                title_key = "水费"
+            first_str = k[0:3]
+            if first_str in self.deal_dict:
+                title_key = self.deal_dict[first_str]["title_key"]
             if title_key:
                 title_idx = self.my_data[0].index(title_key)
                 origin_data = []
