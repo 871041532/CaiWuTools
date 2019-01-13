@@ -34,7 +34,13 @@ class ShowWindow(QWidget):
 
     def initUI(self):
         mainLayout = QVBoxLayout()
-
+        center_layout = QHBoxLayout()
+        left_alyout = QVBoxLayout()
+        right_layout = QVBoxLayout()
+        center_layout.addLayout(left_alyout)
+        center_layout.addLayout(right_layout)
+        center_layout.setStretchFactor(left_alyout, 1)
+        center_layout.setStretchFactor(right_layout, 1)
         self.button1 = QPushButton("选择海鼎导出月初确认表")
         self.button1.clicked.connect(self.click_select_my)
         self.button1.setMinimumHeight(70)
@@ -52,21 +58,25 @@ class ShowWindow(QWidget):
         self.button3.clicked.connect(self.click_judge_btn)
         self.button3.setMinimumHeight(70)
 
-        self.button4 = QPushButton("生成主合同水电结转与确认凭证")
+        self.button4 = QPushButton("生成主合同月初确认凭证")
         self.button4.clicked.connect(self.click_deal_pingzheng)
-        self.button4.setMinimumHeight(70)
+        self.button4.setMinimumHeight(100)
 
         self.button5 = QPushButton("选择莘宝结转基础信息表")
-        self.button5.setMinimumHeight(70)
+        self.button5.setMinimumHeight(100)
         self.button5.clicked.connect(self.click_select_refer)
 
         self.text_browser = QTextBrowser()
         mainLayout.addWidget(self.button1)
-        mainLayout.addWidget(self.button2)
-        mainLayout.addWidget(self.label)
-        mainLayout.addWidget(self.button3)
-        mainLayout.addWidget(self.button5)
-        mainLayout.addWidget(self.button4)
+        mainLayout.addLayout(center_layout)
+
+        left_alyout.addWidget(self.button2)
+        left_alyout.addWidget(self.label)
+        left_alyout.addWidget(self.button3)
+
+        right_layout.addWidget(self.button5)
+        right_layout.addWidget(self.button4)
+
         mainLayout.addWidget(self.text_browser)
 
         # data
@@ -180,18 +190,26 @@ class ShowWindow(QWidget):
             self.log("公司名称检测ok!")
 
         # 基础信息
-        out_put_file_dir = Globals.desktop_path + "主合同结转引入凭证/"
+        out_put_file_dir = Globals.desktop_path + "主合同确认引入凭证/"
         if not os.path.exists(out_put_file_dir):
             os.mkdir(out_put_file_dir)
         cur = datetime.datetime.now()
         kemu_date_str = str(cur.year) + "%02d"%cur.month
         kemu_date_str_last_month = Globals.get_time_text_year_lastmonth()
+        kemu_data_str_next_month = Globals.get_time_text_year_nextmonth()
         output_filenames = (
-            # key，税率，非主力店科目，主力店科目
-            ("电费", 1.16, "6401.24.01.02", "6401.24.01.02", "结转" + kemu_date_str_last_month + "电费 %s-%s-%s", "结转主合同电费.xlsx", "2203.01.01", 0),
-            ("电费", 1.16, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "电费 %s-%s-%s", "确认主合同电费.xlsx", "1122.01.01", 1),
-            ("水费", 1.03, "6401.24.02.02", "6401.24.02.02", "结转" + kemu_date_str_last_month + "水费 %s-%s-%s", "结转主合同水费.xlsx", "2203.01.01", 0),
-            ("水费", 1.03, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "水费 %s-%s-%s", "确认主合同水费.xlsx", "1122.01.01", 1),
+            # key，税率，非主力店科目，主力店科目，摘要，文件名，row1科目，是否是核算项目, 是否用上个月
+            ("电费", 1.16, "6401.24.01.02", "6401.24.01.02", "结转" + kemu_date_str_last_month + "电费 %s-%s-%s", "结转主合同电费.xlsx", "2203.01.01", 0, 1),
+            ("电费", 1.16, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "电费 %s-%s-%s", "确认主合同电费.xlsx", "1122.01.01", 1, 1),
+            ("水费", 1.03, "6401.24.02.02", "6401.24.02.02", "结转" + kemu_date_str_last_month + "水费 %s-%s-%s", "结转主合同水费.xlsx", "2203.01.01", 0, 1),
+            ("水费", 1.03, "2203.01.01", "2203.01.01", "确认" + kemu_date_str_last_month + "水费 %s-%s-%s", "确认主合同水费.xlsx", "1122.01.01", 1, 1),
+
+            ("仓库租赁费", 1.1, "2203.01.01", "2203.01.01", "确认" + kemu_data_str_next_month + "仓库租赁费 %s-%s-%s", "确认主合仓库租赁费.xlsx", "1122.01.01", 1, 0),
+            ("固定租金", 1.1, "2203.01.01", "2203.01.01", "确认" + kemu_data_str_next_month + "固定租金 %s-%s-%s", "确认主合同固定租金.xlsx", "1122.01.01", 1, 0),
+            ("广告位租赁费", 1.1, "2203.01.01", "2203.01.01", "确认" + kemu_data_str_next_month + "广告位租赁费 %s-%s-%s", "确认主合同广告位租赁费.xlsx", "1122.01.01", 1, 0),
+            ("推广费（固定）", 1.06, "2203.01.01", "2203.01.01", "确认" + kemu_data_str_next_month + "推广费（固定） %s-%s-%s", "确认主合推广费（固定）.xlsx", "1122.01.01", 1, 0),
+            ("物业管理费", 1.06, "2203.01.01", "2203.01.01", "确认" + kemu_data_str_next_month + "物业管理费 %s-%s-%s", "确认主合推广费（固定）.xlsx", "1122.01.01", 1, 0),
+
         )
         for file_info in output_filenames:
             # 主key
@@ -210,6 +228,8 @@ class ShowWindow(QWidget):
             kemu_name1 = file_info[6]
             # 核算项目都有
             is_queren = file_info[7]
+            # 是否上月
+            is_last_month = file_info[8]
             # 获取demo
             excel_data = deepcopy(Globals.get_origin_excel_data())
             target_file_name = out_put_file_dir + file_name

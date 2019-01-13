@@ -34,7 +34,13 @@ class ShowWindow(QWidget):
 
     def initUI(self):
         mainLayout = QVBoxLayout()
-
+        center_layout = QHBoxLayout()
+        left_alyout = QVBoxLayout()
+        right_layout = QVBoxLayout()
+        center_layout.addLayout(left_alyout)
+        center_layout.addLayout(right_layout)
+        center_layout.setStretchFactor(left_alyout, 1)
+        center_layout.setStretchFactor(right_layout, 1)
         self.button1 = QPushButton("选择海鼎导出结转表")
         self.button1.clicked.connect(self.click_select_my)
         self.button1.setMinimumHeight(70)
@@ -54,19 +60,21 @@ class ShowWindow(QWidget):
 
         self.button4 = QPushButton("生成主合同结转凭证")
         self.button4.clicked.connect(self.click_deal_pingzheng)
-        self.button4.setMinimumHeight(70)
+        self.button4.setMinimumHeight(100)
 
         self.button5 = QPushButton("选择莘宝结转基础信息表")
-        self.button5.setMinimumHeight(70)
+        self.button5.setMinimumHeight(100)
         self.button5.clicked.connect(self.click_select_refer)
 
         self.text_browser = QTextBrowser()
         mainLayout.addWidget(self.button1)
-        mainLayout.addWidget(self.button2)
-        mainLayout.addWidget(self.label)
-        mainLayout.addWidget(self.button3)
-        mainLayout.addWidget(self.button5)
-        mainLayout.addWidget(self.button4)
+        mainLayout.addLayout(center_layout)
+
+        left_alyout.addWidget(self.button2)
+        left_alyout.addWidget(self.label)
+        left_alyout.addWidget(self.button3)
+        right_layout.addWidget(self.button5)
+        right_layout.addWidget(self.button4)
         mainLayout.addWidget(self.text_browser)
 
         # data
