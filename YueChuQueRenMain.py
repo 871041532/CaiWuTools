@@ -163,6 +163,8 @@ class ShowWindow(QWidget):
         self.refer_data = get_data(self.refer_filename)["EAS基础信息"][1:]
         dict = {}
         for row in self.refer_data:
+            if row[1] in dict:
+                self.log("有重复的:" + str(row[1]), self.LOG_ERROR)
             dict[row[1]] = row
         self.refer_data = dict
 
