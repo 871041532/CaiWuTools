@@ -41,7 +41,7 @@ class ShowWindow(QWidget):
         center_layout.addLayout(right_layout)
         center_layout.setStretchFactor(left_alyout, 1)
         center_layout.setStretchFactor(right_layout, 1)
-        self.button1 = QPushButton("选择海鼎导出结转表")
+        self.button1 = QPushButton("选择海鼎导出月末结转表")
         self.button1.clicked.connect(self.click_select_my)
         self.button1.setMinimumHeight(70)
 
