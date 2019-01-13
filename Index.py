@@ -11,6 +11,7 @@ import ZhiFuBaoPark
 import WeiXinPark
 import YueMoJieZhuanMain
 import YueChuQueRenMain
+import ChengBenFeiYongJiTi
 from Globals import Globals
 
 
@@ -43,6 +44,9 @@ class ShowWindow(QWidget):
 		yuezhong_jiezhuan_layout.addWidget(self.button7)
 		yuezhong_jiezhuan_layout.addWidget(self.button8)
 
+		self.button9 = QPushButton("成本费用计提")
+		self.button9.clicked.connect(self.ChengBenFeiYongJiTi)
+
 		zhifubao_layout = QHBoxLayout()
 		self.button5 = QPushButton("停车场支付宝返款")
 		self.button5.clicked.connect(self.ZhiFuBaoPark)
@@ -60,8 +64,10 @@ class ShowWindow(QWidget):
 		self.button6.setMinimumHeight(90)
 		self.button7.setMinimumHeight(90)
 		self.button8.setMinimumHeight(90)
+		self.button9.setMinimumHeight(90)
 
 		mainLayout.addLayout(yuezhong_jiezhuan_layout)
+		mainLayout.addWidget(self.button9)
 		mainLayout.addLayout(jiezhuan_layout)
 		mainLayout.addLayout(zhifubao_layout)
 		mainLayout.addWidget(self.button2)
@@ -106,6 +112,10 @@ class ShowWindow(QWidget):
 	# 月初确认主合同
 	def YueChuQueRenMain(self):
 		Globals.current_win = YueChuQueRenMain.into()
+
+	# 成本费用计提
+	def ChengBenFeiYongJiTi(self):
+		Globals.current_win = ChengBenFeiYongJiTi.into()
 
 
 if __name__ == '__main__':

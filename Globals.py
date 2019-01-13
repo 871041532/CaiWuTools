@@ -243,6 +243,14 @@ class Globals_Class(object):
 		year, month, day = self.get_next_year_month_day()
 		return str(year) + "%02d" % int(month)
 
+	#获取本月年xx月
+	def get_time_text_year_curmonth(self):
+		import datetime
+		cur = datetime.datetime.now()
+		year = cur.year
+		month = cur.month
+		return str(year) + "%02d" % int(month)
+
 	# 根据时间text获取本月
 	def get_year_month_day_lastmonth(self, date_str):
 		month = date_str.split('/')[1]
