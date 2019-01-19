@@ -101,6 +101,12 @@ class ShowWindow(QWidget):
 
     def load_my_data(self):
         self.my_data = get_data(self.my_filename).popitem(last=False)[1][3:]
+        # 去除空行
+        new_data = []
+        for row in self.my_data:
+            if row and len(row) >= 4:
+                new_data.append(row)
+        self.my_data = new_data
 
     def check_my_data(self):
         return True
