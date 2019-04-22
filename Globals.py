@@ -19,13 +19,13 @@ class Globals_Class(object):
 		# 制单人
 		self.eas_name = ""
 		title_dict = {
-				"pangjm": "金梅君御用",
+				"pangjm-yln": "金梅君御用",
 				"jiangys02": "珊珊专用",
 				"zhoukaibing": "金梅君御用",
 				"Administrator": "金梅君御用",
 		}
 		eas_name_dict = {
-			"pangjm":"pangjinmei",
+			"pangjm-yln":"pangjinmei",
 			"jiangys02":"jiangys02",
 			"zhoukaibing":"zhoukaibing",
 			"Administrator":"Administrator",
