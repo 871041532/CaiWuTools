@@ -5,7 +5,7 @@ excel1 = excelTool.read_excel("new.xlsx")
 # 从excel1获取名字为页面1的sheet
 sheet1 = excel1.页面1
 # 创建名为页面2的sheet
-excel1.create_sheet("页面2")
+excel1.create_sheet("页面3")
 # 将sheet1中bgm列的值改为和name列一样
 def iter_func(row_data):
     row_data.bgm = row_data.name

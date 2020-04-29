@@ -9,7 +9,10 @@ class Excel(object):
         self.sheets = OrderedDict()
         if excel_data:
             for key, sheet_data in excel_data.items():
-                sheet = Excel.Sheet(sheet_data)
+                if len(sheet_data) == 0:
+                    sheet = Excel.Sheet([[]])
+                else:
+                    sheet = Excel.Sheet(sheet_data)
                 self.add_sheet(key, sheet)
 
     def create_sheet(self, sheet_name):
