@@ -58,7 +58,7 @@ class Excel(object):
 
         def append_line(self):
             self.sheet_data.append([])
-            self.rowNum = len(self.title_data)
+            self.rowNum = len(self.sheet_data)
             self.expand_col()
 
         def expand_col(self):
@@ -112,20 +112,20 @@ class Excel(object):
         def __str__(self):
             return str(self.__dict__)
 
-# 迭代行并生成值
-def iter_two_sheet(source_sheet, target_sheet, func):
-    for row_index in range(source_sheet.rowNum):
-        source_iter_data = source_sheet.get_row_iter_data(row_index)
-        target_iter_data = target_sheet.get_row_iter_data(row_index)
-        func(source_iter_data, target_iter_data)
-        target_sheet.set_row_iter_data(target_iter_data)
-
-# 迭代行并修改值
-def iter_sheet(sheet, func):
-    for row_index in range(sheet.rowNum):
-        iter_data = sheet.get_row_iter_data(row_index)
-        func(iter_data)
-        sheet.set_row_iter_data(iter_data)
+# 迭代多个sheet
+def iter_sheets(func, *args):
+    max_row_num = 0
+    for sheet in args:
+        max_row_num = max(max_row_num, sheet.rowNum)
+    for row_index in range(max_row_num):
+        func_params = []
+        for sheet in args:
+            iter_data = sheet.get_row_iter_data(row_index)
+            func_params.append(iter_data)
+        func(*func_params)
+        for i, sheet in enumerate(args):
+            iter_data = func_params[i]
+            sheet.set_row_iter_data(iter_data)
 
 # 从桌面文件中读取excel表
 # 参数fileInDesktopName：桌面文件名
@@ -145,14 +145,3 @@ def write_excel(fileInDesktopName, excel_object):
     else:
         excel_data = excel_object
     save_data(Globals.desktop_path + fileInDesktopName, excel_data)
-
-# excel1 = read_excel("new2.xlsx", True)
-# sheet1 = excel1.页面1
-# sheet2 = excel1.sheet2
-# def iter_func(source, target):
-#     target.name = source.name
-#     target.author = source.author
-#     target.args = source.args
-#
-# iter_row(sheet1, sheet2, iter_func)
-# write_excel("new3.xlsx", excel1)

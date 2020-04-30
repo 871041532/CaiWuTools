@@ -7,3 +7,4 @@
 .idea/CaiWuTools.iml
 *.pyc
 venv
+.idea/inspectionProfiles/profiles_settings.xml
