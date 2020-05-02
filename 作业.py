@@ -1,18 +1,27 @@
 import ExcelTool as excelTool
-# 创建一个新excel，用来存放结果
-excel_1 = excelTool.Excel()
-sheet_1 = excel_1.create_sheet("sheet1")
-# 获取桌面excel
-excel_2 = excelTool.read_excel("金地疫情期间减免租金数据收集及操作_2020.04.29_回稿2(1).xlsx")
-# 得到源表中原有sheet（固定租金）
-sheet_2 =getattr(excel_2, "减免数据导入模板")
-# 迭代多个sheet，循环元组
-def iter_func(iter_data1, iter_data2):
-    iter_data2["品牌说明"]=iter_data1["品牌说明"]
-    iter_data2["求和"]= iter_data1["应收金额"] + iter_data1["减免总金额"]
-pass
-#迭代iter行的表（公式名，iter_data3取自sheet2,  iter_data3取自sheeet3， iter_data1取自sheet1
-excelTool.iter_sheets(iter_func, sheet_2, sheet_1)
-# 将处理后的excel写入新的表，如果这个表已存在就覆盖掉，不存在就新建
-excelTool.write_excel("结果.xlsx",excel_1)
 
+# 获取桌面excel
+excel_1 = excelTool.read_excel("收入台账2020-4-30标题.xlsx")
+excel_2 = excelTool.read_excel("2.合同押金及收入销账明细 - 副本.xlsx")
+sheet_1=excel_1.租金
+sheet_2=excel_2.租金
+#创建集合1，迭代 表1中的品牌说明添加到集合，统一转换为小写
+jihe1=set()
+def iter_func1(iter_data1):
+    jihe1.add(iter_data1.商户品牌.lower())
+    pass
+excelTool.iter_sheets(iter_func1, sheet_1 ) #取自sheet_1
+#创建集合2，迭代 表2中的商户品牌添加到集合，统一转换为小写
+jihe2=set()
+def iter_func2(iter_data2):
+    jihe2.add(iter_data2.商户品牌.lower())
+    pass
+excelTool.iter_sheets(iter_func2, sheet_2 ) #取自sheet_2
+#求差集，在集合2中却不在集合1里的东西
+jihe3 =   jihe2 - jihe1
+#如果差集有内容，打印差集内容，并报错
+if len(jihe3) > 0:
+    print(jihe3)
+    raise  Exception("报错，有品牌写错")
+else:
+     print("品牌已全部包含，可以下一步")
