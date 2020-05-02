@@ -71,6 +71,16 @@ class Excel(object):
             self.colNum = len(self.title_data)  # 列数
             self.expand_col()
 
+        def get_repeat_title(self):
+            tem_title = []
+            tem_set = set()
+            for title in self.title_data:
+                if title in tem_set:
+                    tem_title.append(title)
+                else:
+                    tem_set.add(title)
+            return tem_title
+
         def append_title(self, title_name):
             if title_name in self.title_data:
                 return
@@ -146,8 +156,12 @@ class Excel(object):
 # 迭代多个sheet
 def iter_sheets(func, *args):
     max_row_num = 0
-    for sheet in args:
+    for i, sheet in enumerate(args):
         max_row_num = max(max_row_num, sheet.rowNum)
+        repeat_title = sheet.get_repeat_title()
+        if len(repeat_title) > 0:
+            raise Exception("第%d个sheet有重复列：%s"%(i + 1, "，".join(repeat_title)))
+
     for row_index in range(max_row_num):
         func_params = []
         for sheet in args:

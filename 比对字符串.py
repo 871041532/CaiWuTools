@@ -16,7 +16,7 @@ jihe2=set()
 def iter_func2(iter_data2):
     jihe2.add(iter_data2.品牌说明.lower())
     pass
-excelTool.iter_sheets(iter_func2, sheet_2 ) #取自sheet_2
+excelTool.iter_sheets(iter_func2, sheet_2) #取自sheet_2
 #求差集，在集合2中却不在集合1里的东西
 jihe3 =   jihe2 - jihe1
 #如果差集有内容，打印差集内容，并报错
