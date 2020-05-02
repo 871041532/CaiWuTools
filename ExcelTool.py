@@ -3,9 +3,29 @@ from collections import OrderedDict
 from pyexcel_xlsx import save_data
 from pyexcel_xlsx import get_data
 
+
+# idx_englishs = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w","x", "y", "z")
+# IDX_TO_ENGLISH_TITLE = {}
+#
+# def idx_to_english_title(idx):
+#     index = idx
+#     length = len(idx_englishs)
+#     nums = []
+#     while index + 1 > length:
+#         num = index // length - 1
+#         nums.append(idx_englishs[num])
+#         index = index % length
+#     nums.append(idx_englishs[index])
+#     return ''.join(nums)
+#
+# def generate_idx_to_english_dict():
+#     for i in range(500):
+#         IDX_TO_ENGLISH_TITLE[i] = idx_to_english_title(i)
+# generate_idx_to_english_dict()
+
 # excel类
 class Excel(object):
-    def __init__(self, excel_data):
+    def __init__(self, excel_data = None):
         self.sheets = OrderedDict()
         if excel_data:
             for key, sheet_data in excel_data.items():
@@ -42,6 +62,8 @@ class Excel(object):
     class Sheet(object):
         def __init__(self, sheet_data):
             self.title_data = sheet_data[0]  # title数据
+            for i in range(len(self.title_data)):
+                self.title_data[i] = str(self.title_data[i])
             sheet_data.pop(0)
             self.sheet_data = sheet_data
 
@@ -84,6 +106,8 @@ class Excel(object):
             for col_index in range(self.colNum):
                 col_name = self.title_data[col_index]
                 value = row_data[col_index]
+                if type(value) == str:
+                    value = value.lower()
                 iter_data[col_name] = value
             return iter_data
 
@@ -92,25 +116,32 @@ class Excel(object):
             row_data = self.sheet_data[row_index]
             for col_index, col_name in enumerate(self.title_data):
                 row_data[col_index] = iter_data[col_name]
-                iter_data.__dict__.pop(col_name)
-            iter_data.__dict__.pop("row_index")
-            for append_col_name, append_col_value in iter_data.__dict__.items():
+                iter_data.title_dict.pop(col_name)
+            iter_data.title_dict.pop("row_index")
+            for append_col_name, append_col_value in iter_data.title_dict.items():
                 self.append_title(append_col_name)
                 row_data[self.colNum - 1] = append_col_value
 
     # 迭代类
     class IterData(object):
         def __init__(self):
-            pass
+            self.title_dict = {}
+
+        def __setattr__(self, key, value):
+            if key == "title_dict":
+                self.__dict__[key] = value
+            else:
+                self.__setitem__(key, value)
 
         def __setitem__(self, key, value):
+            self.title_dict[key] = value
             self.__dict__[key] = value
 
         def __getitem__(self, key):
             return self.__dict__[key]
 
         def __str__(self):
-            return str(self.__dict__)
+            return str(self.title_dict)
 
 # 迭代多个sheet
 def iter_sheets(func, *args):
