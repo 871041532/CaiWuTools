@@ -13,7 +13,7 @@ def iter_func1(iter_data1):
 excelTool.iter_sheets(iter_func1, sheet_1 ) #取自sheet_1
 #创建集合2，迭代 表2中的商户品牌添加到集合，统一转换为小写
 jihe2=set()
-def iter_func2(iter_data2):
+def iter_func2(iter_data2):1213123
     jihe2.add(iter_data2.品牌说明.lower())
     pass
 excelTool.iter_sheets(iter_func2, sheet_2) #取自sheet_2
