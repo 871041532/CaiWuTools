@@ -160,7 +160,7 @@ def iter_sheets(func, *args):
         max_row_num = max(max_row_num, sheet.rowNum)
         repeat_title = sheet.get_repeat_title()
         if len(repeat_title) > 0:
-            raise Exception("第%d个sheet有重复列：%s"%(i + 1, "，".join(repeat_title)))
+             raise Exception("警告：迭代时第%d个sheet有重复列：%s"%(i + 1, "，".join(repeat_title)))
 
     for row_index in range(max_row_num):
         func_params = []
