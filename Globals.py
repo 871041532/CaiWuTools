@@ -22,6 +22,8 @@ class Globals_Class(object):
 				"Administrator": "111",
 				"PC":"222",
 				"Admin":"333",
+				"pangjinmei":"333",
+				"qqqqq":"1111",
 		}
 		if self.user not in title_dict:
 			self.user = None

@@ -61,6 +61,7 @@ class Excel(object):
     # 内部sheet类
     class Sheet(object):
         def __init__(self, sheet_data):
+            self.isLower = True
             self.title_data = sheet_data[0]  # title数据
             for i in range(len(self.title_data)):
                 self.title_data[i] = str(self.title_data[i])
@@ -70,6 +71,17 @@ class Excel(object):
             self.rowNum = len(sheet_data)  # 行数
             self.colNum = len(self.title_data)  # 列数
             self.expand_col()
+
+        #  排序
+        def Sort(self, titleName):
+            index = self.title_data.index(titleName)
+            if index < 0:
+                raise Exception("要排序的列名在sheet中不存在！")
+            self.sheet_data.sort(key = lambda x:x[index])
+
+        # 设置大小写
+        def SetLower(self, b):
+            self.isLower = b
 
         def get_repeat_title(self):
             tem_title = []
@@ -116,7 +128,7 @@ class Excel(object):
             for col_index in range(self.colNum):
                 col_name = self.title_data[col_index]
                 value = row_data[col_index]
-                if type(value) == str:
+                if type(value) == str and self.isLower:
                     value = value.lower()
                 iter_data[col_name] = value
             return iter_data
